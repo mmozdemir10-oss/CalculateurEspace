@@ -2,53 +2,53 @@ import streamlit as st
 import streamlit.components.v1 as components
 import json
 
-st.set_page_config(layout="wide", page_title="Simulateur Metrique")
+st.set_page_config(layout="wide", page_title="Simulateur de Rangement Pro")
 
-st.title("🧩 Simulateur de rangement avec alignement")
-st.write("Ajustez le conteneur, ajoutez vos blocs, puis glissez-les dedans.")
+st.title("🧩 Simulateur de rangement sur mesure")
+st.write("Configurez vos dimensions dans les zones colorées ci-dessous, générez vos blocs, puis glissez-les dans le rectangle.")
 
+# --- INITIALISATION DE L'ÉTAT ---
 if "pieces" not in st.session_state:
     st.session_state.pieces = []
 
-ECHELLE = 1.5
+# --- ZONE SUPÉRIEURE : CONFIGURATION VISUELLE ET ORGANISÉE ---
+col_rect, col_blocs, col_boutons = st.columns([2.3, 2.3, 1])
 
-st.sidebar.header("1. Le Rectangle Principal")
-bg_m = st.sidebar.number_input("Longueur du rectangle (m)", min_value=0, max_value=10, value=4, step=1)
-bg_cm = st.sidebar.number_input("Longueur du rectangle (cm)", min_value=0, max_value=99, value=0, step=5)
+# 🟦 SECTION 1 : RECTANGLE PRINCIPAL (Cadre Bleu)
+with col_rect:
+    bg_m = st.number_input("Longueur du rectangle (m)", min_value=0, max_value=30, value=15, step=1, key="bg_m")
+    bg_cm = st.number_input("Longueur du rectangle (cm)", min_value=0, max_value=99, value=0, step=5, key="bg_cm")
+    bh_m = st.number_input("Largeur du rectangle (m)", min_value=0, max_value=30, value=5, step=1, key="bh_m")
+    bh_cm = st.number_input("Largeur du rectangle (cm)", min_value=0, max_value=99, value=0, step=5, key="bh_cm")
 
-bh_m = st.sidebar.number_input("Largeur du rectangle (m)", min_value=0, max_value=10, value=2, step=1)
-bh_cm = st.sidebar.number_input("Largeur du rectangle (cm)", min_value=0, max_value=99, value=50, step=5)
+    grand_largeur_cm = (bg_m * 100) + bg_cm
+    grand_hauteur_cm = (bh_m * 100) + bh_cm
 
-grand_largeur_cm = (bg_m * 100) + bg_cm
-grand_hauteur_cm = (bh_m * 100) + bh_cm
+    # --- CALCUL DYNAMIQUE DE L'ÉCHELLE POUR PRENDRE TOUTE LA PLACE ---
+    # Le rectangle fera environ 950px de large à l'écran qu'il fasse 5m ou 15m
+    if grand_largeur_cm > 0:
+        ECHELLE = 950 / grand_largeur_cm
+    else:
+        ECHELLE = 1.0
 
-grand_largeur_px = grand_largeur_cm * ECHELLE
-grand_hauteur_px = grand_hauteur_cm * ECHELLE
+    grand_largeur_px = grand_largeur_cm * ECHELLE
+    grand_hauteur_px = grand_hauteur_cm * ECHELLE
 
-st.sidebar.markdown("---")
-st.sidebar.header("Options d'alignement")
-pas_grille_cm = st.sidebar.selectbox(
-    "Aimanter les blocs tous les :",
-    options=[0, 1, 2, 5, 10, 20],
-    index=3,
-    format_func=lambda x: "Pas d'aimantage (libre)" if x == 0 else f"{x} cm"
-)
-pas_grille_px = pas_grille_cm * ECHELLE
+    st.markdown(
+        f"""
+        <div style="background-color: #e0f2fe; padding: 12px; border-radius: 8px; border-left: 6px solid #0284c7; margin-top: 10px;">
+            <span style="color: #0369a1; font-weight: bold; font-size: 15px;">🟦 RECTANGLE : {bg_m}m {bg_cm:02d}cm × {bh_m}m {bh_cm:02d}cm</span>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
 
-st.sidebar.markdown("---")
-st.sidebar.header("2. Ajouter des blocs")
-
-p_long_m = st.sidebar.number_input("Longueur du bloc (m)", min_value=0, max_value=10, value=1, step=1)
-p_long_cm = st.sidebar.number_input("Longueur du bloc (cm)", min_value=0, max_value=99, value=20, step=5)
-
-p_larg_m = st.sidebar.number_input("Largeur du bloc (m)", min_value=0, max_value=10, value=0, step=1)
-p_larg_cm = st.sidebar.number_input("Largeur du bloc (cm)", min_value=0, max_value=99, value=80, step=5)
-
-p_nombre = st.sidebar.number_input("Nombre de blocs", min_value=1, max_value=20, value=1)
-
-if st.sidebar.button("Ajouter les blocs"):
-    f_longueur_cm = (p_long_m * 100) + p_long_cm
-    f_largeur_cm = (p_larg_m * 100) + p_larg_cm
+# 🟧 SECTION 2 : DIMENSIONS DES BLOCS (Cadre Orange)
+with col_blocs:
+    p_long_m = st.number_input("Longueur bloc (m)", min_value=0, max_value=30, value=1, step=1)
+    p_long_cm = st.number_input("Longueur bloc (cm)", min_value=0, max_value=99, value=20, step=5)
+    p_larg_m = st.number_input("Largeur bloc (m)", min_value=0, max_value=30, value=0, step=1)
+    p_larg_cm = st.number_input("Largeur bloc (cm)", min_value=0, max_value=99, value=80, step=5)
     
     txt_long = f"{p_long_m}m" if p_long_m > 0 else ""
     txt_long += f"{p_long_cm}cm" if p_long_cm > 0 or p_long_m == 0 else ""
@@ -57,8 +57,38 @@ if st.sidebar.button("Ajouter les blocs"):
     txt_larg += f"{p_larg_cm}cm" if p_larg_cm > 0 or p_larg_m == 0 else ""
     
     label_metrique = f"{txt_long} x {txt_larg}"
+
+    st.markdown(
+        f"""
+        <div style="background-color: #ffedd5; padding: 12px; border-radius: 8px; border-left: 6px solid #ea580c; margin-top: 10px;">
+            <span style="color: #c2410c; font-weight: bold; font-size: 15px;">🟧 BLOC SÉLECTIONNÉ : {label_metrique}</span>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    sub_col_opt1, sub_col_opt2 = st.columns(2)
+    with sub_col_opt1:
+        p_nombre = st.number_input("Nombre de blocs", min_value=1, max_value=50, value=1)
+    with sub_col_opt2:
+        pas_grille_cm = st.selectbox("Aimantage", options=[0, 1, 5, 10, 20, 50], index=2, format_func=lambda x: "Libre" if x == 0 else f"{x} cm")
+        pas_grille_px = pas_grille_cm * ECHELLE
+
+# ⚡ SECTION 3 : LES BOUTONS
+with col_boutons:
+    st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True) 
+    btn_ajouter = st.button("➕ Ajouter les blocs", use_container_width=True, type="primary")
+    btn_reset = st.button("🔄 Reset positions", use_container_width=True)
+    btn_effacer = st.button("🗑️ Tout effacer", use_container_width=True)
+
+
+# --- LOGIQUE DE GESTION DES BOUTONS ---
+if btn_ajouter:
+    f_longueur_cm = (p_long_m * 100) + p_long_cm
+    f_largeur_cm = (p_larg_m * 100) + p_larg_cm
     
-    couleurs = ["#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#33FFF3", "#9333FF", "#FF33A8"]
+    couleurs = ["#FF5733", "#22c55e", "#3b82f6", "#eab308", "#a855f7", "#ec4899", "#14b8a6"]
     couleur = couleurs[len(st.session_state.pieces) % len(couleurs)]
     
     for i in range(p_nombre):
@@ -71,16 +101,14 @@ if st.sidebar.button("Ajouter les blocs"):
         })
     st.rerun()
 
-st.sidebar.markdown("---")
-col_btn1, col_btn2 = st.sidebar.columns(2)
-with col_btn1:
-    if st.button("Reset"): st.rerun()
-with col_btn2:
-    if st.button("Effacer tout"):
-        st.session_state.pieces = []
-        st.rerun()
+if btn_effacer:
+    st.session_state.pieces = []
+    st.rerun()
 
+
+# --- INTERFACE DE GLISSER-DÉPOSER AUTOMATIQUE ---
 pieces_json = json.dumps(st.session_state.pieces)
+reset_trigger = "true" if btn_reset else "false"
 
 html_code = f"""
 <!DOCTYPE html>
@@ -89,27 +117,27 @@ html_code = f"""
 <style>
     body {{ font-family: sans-serif; user-select: none; background-color: #f9f9f9; margin: 0; padding: 10px; }}
     .container {{ display: flex; flex-direction: column; gap: 20px; }}
+    
+    #zone-stockage {{
+        min-height: 120px; border: 2px solid #cbd5e1; background-color: #fff; border-radius: 8px;
+        padding: 15px; display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start;
+    }}
+    
     #zone-depot {{
         width: {grand_largeur_px}px;
         height: {grand_hauteur_px}px;
-        background-color: #e0e0e0;
-        border: 3px dashed #444;
-        border-radius: 4px;
+        background-color: #e2e8f0;
+        border: 3px dashed #475569;
+        border-radius: 6px;
         position: relative;
-        background-image: {f'linear-gradient(to right, #ccc 1px, transparent 1px), linear-gradient(to bottom, #ccc 1px, transparent 1px)' if pas_grille_px > 0 else 'none'};
+        background-image: {f'linear-gradient(to right, #cbd5e1 1px, transparent 1px), linear-gradient(to bottom, #cbd5e1 1px, transparent 1px)' if pas_grille_px > 0 else 'none'};
         background-size: {pas_grille_px}px {pas_grille_px}px;
+        margin-top: 5px;
     }}
-    #zone-depot::before {{
-        content: "Rectangle : {bg_m}m {bg_cm}cm x {bh_m}m {bh_cm}cm";
-        position: absolute; top: -25px; left: 5px; color: #444; font-weight: bold; font-size: 14px;
-    }}
-    #zone-stockage {{
-        min-height: 150px; border: 2px solid #ccc; background-color: #fff; border-radius: 8px;
-        padding: 15px; display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; margin-top: 10px;
-    }}
+    
     .piece {{
         display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;
-        font-size: 11px; border-radius: 2px; cursor: move; box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        font-size: 11px; border-radius: 3px; cursor: move; box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         text-shadow: 1px 1px 2px rgba(0,0,0,0.7); text-align: center; overflow: hidden; box-sizing: border-box;
     }}
 </style>
@@ -117,14 +145,22 @@ html_code = f"""
 <body>
 
 <div class="container">
-    <div style="margin-top:25px;"><div id="zone-depot"></div></div>
-    <h3>Pieces disponibles (Glissez-les vers le haut) :</h3>
-    <div id="zone-stockage"></div>
+    <div>
+        <h4 style="margin: 0 0 8px 0; color: #475569;">📦 Poche / Réserve de vos blocs :</h4>
+        <div id="zone-stockage"></div>
+    </div>
+    
+    <div>
+        <h4 style="margin: 0 0 8px 0; color: #475569;">📐 Rectangle Principal ({bg_m}m {bg_cm}cm × {bh_m}m {bh_cm}cm) :</h4>
+        <div id="zone-depot"></div>
+    </div>
 </div>
 
 <script>
     const piecesData = {pieces_json};
     const pasGrille = {pas_grille_px};
+    const forceReset = {reset_trigger};
+    
     const zoneStockage = document.getElementById('zone-stockage');
     const zoneDepot = document.getElementById('zone-depot');
 
@@ -136,7 +172,11 @@ html_code = f"""
         el.style.height = p.h + 'px';
         el.style.backgroundColor = p.color;
         el.innerText = p.label;
+        
+        // Si forceReset est vrai, l'élément est remis à sa position initiale dans le stock
         el.style.position = 'relative';
+        el.style.left = 'auto';
+        el.style.top = 'auto';
         
         el.addEventListener('mousedown', function(e) {{
             e.preventDefault();
@@ -164,8 +204,8 @@ html_code = f"""
                 const rectDepot = zoneDepot.getBoundingClientRect();
                 const rectPiece = el.getBoundingClientRect();
 
-                if (rectPiece.left >= rectDepot.left - 30 && rectPiece.right <= rectDepot.right + 30 &&
-                    rectPiece.top >= rectDepot.top - 30 && rectPiece.bottom <= rectDepot.bottom + 30) {{
+                if (rectPiece.left >= rectDepot.left - 40 && rectPiece.right <= rectDepot.right + 40 &&
+                    rectPiece.top >= rectDepot.top - 40 && rectPiece.bottom <= rectDepot.bottom + 40) {{
                     
                     zoneDepot.appendChild(el);
                     let localX = rectPiece.left - rectDepot.left;
@@ -190,6 +230,7 @@ html_code = f"""
                 document.onmouseup = null;
             }};
         }});
+        
         zoneStockage.appendChild(el);
     }});
 </script>
@@ -197,7 +238,7 @@ html_code = f"""
 </html>
 """
 
-hauteur_composant = max(600, int(grand_hauteur_px) + 300)
+# Hauteur dynamique basée sur la taille réelle calculée du rectangle principal
+hauteur_composant = max(600, int(grand_hauteur_px) + 280)
 components.html(html_code, height=hauteur_composant, scrolling=True)
-
 
