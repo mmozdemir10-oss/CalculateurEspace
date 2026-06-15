@@ -221,8 +221,6 @@ if btn_reset:
 pieces_json = json.dumps(st.session_state.pieces)
 reset_trigger = "true" if btn_reset else "false"
 
-pieces_json = json.dumps(st.session_state.pieces)
-
 html_code = f"""
 <!DOCTYPE html>
 <html>
@@ -313,7 +311,7 @@ body {{
 
 <script>
 
-const pieces = JSON.parse8^(`{pieces_json}`);
+const pieces = JSON.parse(`{pieces_json}`);
 const pasGrille = {pas_grille_px};
 
 const zoneStock = document.getElementById("zone-stockage");
@@ -391,7 +389,7 @@ function makeDraggable(el) {{
     window.addEventListener("touchend", end);
 }}
 
-pieces.forEach(p => {{
+pieces.forEach(p => {
 
     const el = document.createElement("div");
     el.className = "piece";
@@ -405,7 +403,7 @@ pieces.forEach(p => {{
     const zoneStock = document.getElementById("zone-stockage");
     zoneStock.appendChild(el);
     makeDraggable(el);
-}}
+});
 
 </script>
 
