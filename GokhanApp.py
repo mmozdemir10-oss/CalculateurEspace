@@ -317,9 +317,9 @@ const pasGrille = {pas_grille_px};
 const zoneStock = document.getElementById("zone-stockage");
 const zoneDepot = document.getElementById("zone-depot");
 
-if (!zoneStock || !zoneDepot) {
+if (!zoneStock || !zoneDepot) {{
     console.error("DOM not ready");
-}
+}}
 
 function makeDraggable(el) {{
 
