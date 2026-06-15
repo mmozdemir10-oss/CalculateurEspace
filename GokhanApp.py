@@ -317,6 +317,10 @@ const pasGrille = {pas_grille_px};
 const zoneStock = document.getElementById("zone-stockage");
 const zoneDepot = document.getElementById("zone-depot");
 
+if (!zoneStock || !zoneDepot) {
+    console.error("DOM not ready");
+}
+
 function makeDraggable(el) {{
 
     let offsetX = 0;
@@ -389,7 +393,8 @@ function makeDraggable(el) {{
     window.addEventListener("touchend", end);
 }}
 
-pieces.forEach(p => {
+window.addEventListener("load", () => {
+    pieces.forEach(p => {
 
     const el = document.createElement("div");
     el.className = "piece";
@@ -403,6 +408,7 @@ pieces.forEach(p => {
     const zoneStock = document.getElementById("zone-stockage");
     zoneStock.appendChild(el);
     makeDraggable(el);
+    });
 });
 
 </script>
