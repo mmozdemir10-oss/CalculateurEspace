@@ -393,8 +393,8 @@ function makeDraggable(el) {{
     window.addEventListener("touchend", end);
 }}
 
-window.addEventListener("load", () => {
-    pieces.forEach(p => {
+window.addEventListener("load", () => {{
+    pieces.forEach(p => {{
 
     const el = document.createElement("div");
     el.className = "piece";
@@ -408,8 +408,8 @@ window.addEventListener("load", () => {
     const zoneStock = document.getElementById("zone-stockage");
     zoneStock.appendChild(el);
     makeDraggable(el);
-    });
-});
+    }});
+}});
 
 </script>
 
