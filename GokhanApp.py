@@ -219,7 +219,6 @@ if btn_reset:
     st.rerun()
 
 pieces_json = json.dumps(st.session_state.pieces)
-
 reset_trigger = "true" if btn_reset else "false"
 
 html_code = f"""
@@ -312,7 +311,7 @@ body {{
 
 <script>
 
-const pieces = {pieces_json};
+const pieces = JSON.parse8^(`{pieces_json}`);
 const pasGrille = {pas_grille_px};
 
 const zoneStock = document.getElementById("zone-stockage");
