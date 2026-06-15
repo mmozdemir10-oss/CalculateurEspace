@@ -183,9 +183,9 @@ with col_stats:
 with col_actions:
     st.markdown("<div style='height:25px'></div>", unsafe_allow_html=True)
 
-    btn_ajouter = st.button("➕ Ajouter", use_container_width=True, type="primary")
-    btn_reset = st.button("🔄 Reset", use_container_width=True)
-    btn_effacer = st.button("🗑️ Vider", use_container_width=True)
+btn_ajouter = st.button("➕ Ajouter", use_container_width=True, type="primary")
+btn_reset = st.button("🔄 Reset", use_container_width=True)
+btn_effacer = st.button("🗑️ Vider", use_container_width=True)
 
 if btn_ajouter:
     f_longueur_cm = (p_long_m * 100) + p_long_cm
