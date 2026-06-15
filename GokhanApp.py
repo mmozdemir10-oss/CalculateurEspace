@@ -84,8 +84,6 @@ if "pieces" not in st.session_state:
 if "surface_occupee" not in st.session_state:
     st.session_state.surface_occupee = 0
 
-st.markdown(...)
-
 st.markdown("""
 <div style="
 background:linear-gradient(135deg,#2563eb,#0ea5e9);
@@ -163,12 +161,11 @@ with col_blocs:
 
     pas_grille_px = pas_grille_cm * ECHELLE
 
-    with col_stats:
-     surface_totale = round((grand_largeur_cm * grand_hauteur_cm) / 10000, 2)
+with col_stats:
+    surface_totale = round((grand_largeur_cm * grand_hauteur_cm) / 10000, 2)
 
-    st.markdown(f"""
+    html_stats = f"""
     <div class="card">
-
         <div class="small-label">📊 SURFACE</div>
         <div class="big-value">{surface_totale} m²</div>
 
@@ -176,9 +173,12 @@ with col_blocs:
 
         <div class="small-label">📦 BLOCS</div>
         <div class="big-value">{len(st.session_state.pieces)}</div>
-
     </div>
-    """, unsafe_allow_html=True)
+
+    """.replace("\n", "")
+
+    st.markdown(html_stats, unsafe_allow_html=True)
+
 
 with col_actions:
     st.markdown("<div style='height:25px'></div>", unsafe_allow_html=True)
@@ -403,7 +403,7 @@ pieces.forEach(p => {{
 
     zoneStock.appendChild(el);
     makeDraggable(el);
-}});
+}}
 
 </script>
 
@@ -418,4 +418,3 @@ components.html(
     height=hauteur,
     scrolling=True
 )
-
