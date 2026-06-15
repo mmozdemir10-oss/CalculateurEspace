@@ -221,6 +221,8 @@ if btn_reset:
 pieces_json = json.dumps(st.session_state.pieces)
 reset_trigger = "true" if btn_reset else "false"
 
+pieces_json = json.dumps(st.session_state.pieces)
+
 html_code = f"""
 <!DOCTYPE html>
 <html>
@@ -400,6 +402,7 @@ pieces.forEach(p => {{
     el.style.background = p.color;
     el.innerText = p.label;
 
+    const zoneStock = document.getElementById("zone-stockage");
     zoneStock.appendChild(el);
     makeDraggable(el);
 }}
