@@ -218,7 +218,7 @@ if btn_effacer:
 if btn_reset:
     st.rerun()
 
-pieces_json = json.dumps(st.session_state.pieces)
+pieces_json = json.dumps(st.session_state.pieces).replace("</", "<\\/")
 reset_trigger = "true" if btn_reset else "false"
 
 html_code = f"""
@@ -311,7 +311,7 @@ body {{
 
 <script>
 
-const pieces = JSON.parse(`{pieces_json}`);
+const pieces = {pieces_json};
 const pasGrille = {pas_grille_px};
 
 const zoneStock = document.getElementById("zone-stockage");
