@@ -401,11 +401,11 @@ function makeDraggable(el) {{
     window.addEventListener("touchend", end);
 }}
 
-window.addEventListener("load", () => {
+window.addEventListener("load", () => {{
 
     const zoneStock = document.getElementById("zone-stockage");
 
-    pieces.forEach(p => {
+    pieces.forEach(p => {{
 
         const el = document.createElement("div");
         el.className = "piece";
@@ -419,7 +419,7 @@ window.addEventListener("load", () => {
         el.dataset.longueur = p.w;
         el.dataset.largeur = p.h;
 
-        el.addEventListener("dblclick", () => {
+        el.addEventListener("dblclick", () => {{
 
             const w = el.offsetWidth;
             const h = el.offsetHeight;
@@ -436,13 +436,13 @@ window.addEventListener("load", () => {
             el.innerText =
                 el.dataset.longueur + " mm × " +
                 el.dataset.largeur + " mm";
-        });
+        }});
 
         zoneStock.appendChild(el);
         makeDraggable(el);
-    });
+    }});
 
-});
+}});
             
 hauteur = max(650, int(grand_hauteur_px) + 250)
 
