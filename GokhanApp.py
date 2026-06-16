@@ -157,7 +157,7 @@ label_metrique = f"{p_long_mm} × {p_larg_mm} mm"
 
 st.markdown(f"""
     <div class="card">
-        <div class="small-label">---------------------</div>
+        <div class="small-label">--------------------------------------</div>
     </div>
     """, unsafe_allow_html=True)
 
