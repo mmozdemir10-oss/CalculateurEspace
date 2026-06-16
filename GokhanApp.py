@@ -106,7 +106,7 @@ col_rect, col_blocs, col_stats, col_actions = st.columns([2.2, 2.2, 1.4, 1])
 with col_rect:
 
     bg_mm = st.number_input(
-        "Longueur du camion (mm)",
+        "Length of the truck (mm)",
         min_value=0,
         max_value=30000,
         value=15000,
@@ -114,7 +114,7 @@ with col_rect:
     )
 
     bh_mm = st.number_input(
-        "Largeur du camion (mm)",
+        "Width of the truck (mm)",
         min_value=0,
         max_value=30000,
         value=5000,
@@ -131,14 +131,14 @@ grand_hauteur_px = grand_hauteur_mm * ECHELLE
 
 st.markdown(f"""
     <div class="card">
-        <div class="small-label">📐 RECTANGLE PRINCIPAL</div>
+        <div class="small-label">🚛 TRUCK</div>
         <div class="big-value">{bg_mm} mm × {bh_mm} mm</div>
     </div>
     """, unsafe_allow_html=True)
 
 with col_blocs:
     p_long_mm = st.number_input(
-    "Longueur bloc (mm)",
+    "Block length (mm)",
     min_value=1,
     max_value=30000,
     value=1200,
@@ -146,7 +146,7 @@ with col_blocs:
 )
 
     p_larg_mm = st.number_input(
-    "Largeur bloc (mm)",
+    "Block width (mm)",
     min_value=1,
     max_value=30000,
     value=800,
@@ -163,7 +163,7 @@ st.markdown(f"""
 
 st.markdown(f"""
     <div class="card">
-        <div class="small-label">📦 BLOC SÉLECTIONNÉ</div>
+        <div class="small-label">📦 SELECTED BLOCK</div>
         <div class="big-value">{label_metrique}</div>
     </div>
     """, unsafe_allow_html=True)
@@ -182,12 +182,12 @@ with col_stats:
 
     html_stats = f"""
     <div class="card">
-        <div class="small-label">🚛 SURFACE CAMION</div>
+        <div class="small-label">🚛 TRUCK SURFACE</div>
         <div class="big-value">{surface_totale} m²</div>
 
         <hr>
 
-        <div class="small-label">📦 BLOCS</div>
+        <div class="small-label">📦 BLOCKS</div>
         <div class="big-value">{len(st.session_state.pieces)}</div>
     </div>
 
@@ -199,9 +199,9 @@ with col_stats:
 with col_actions:
     st.markdown("<div style='height:25px'></div>", unsafe_allow_html=True)
 
-btn_ajouter = st.button("➕ Ajouter", use_container_width=True, type="primary")
+btn_ajouter = st.button("➕ Add", use_container_width=True, type="primary")
 btn_reset = st.button("🔄 Reset", use_container_width=True)
-btn_effacer = st.button("🗑️ Vider", use_container_width=True)
+btn_effacer = st.button("🗑️ Empty", use_container_width=True)
 
 if btn_ajouter:
     f_longueur_mm = p_long_mm
