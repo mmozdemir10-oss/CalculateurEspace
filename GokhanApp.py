@@ -418,14 +418,14 @@ window.addEventListener("load", () => {{
 
     el.addEventListener("dblclick", () => {
 
-    const w = el.offsetWidth;
-    const h = el.offsetHeight;
+     const w = el.offsetWidth;
+     const h = el.offsetHeight;
 
     el.style.width = h + "px";
     el.style.height = w + "px";
 
-    const ancienneLongueur = el.dataset.longueur;
-    const ancienneLargeur = el.dataset.largeur;
+     const ancienneLongueur = el.dataset.longueur;
+     const ancienneLargeur = el.dataset.largeur;
 
     el.dataset.longueur = ancienneLargeur;
     el.dataset.largeur = ancienneLongueur;
