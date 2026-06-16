@@ -101,11 +101,7 @@ box-shadow:0 10px 25px rgba(37,99,235,.25);
 </div>
 """, unsafe_allow_html=True)
     
-col_gauche, col_droite = st.columns([4.5, 2])
-
-with col_gauche:
-
-    col_rect, col_blocs = st.columns(2)
+col_rect, col_blocs, col_stats, col_actions = st.columns([2.2, 2.2, 1.4, 1])
     
 with col_rect:
 
@@ -171,8 +167,6 @@ st.markdown("<br>", unsafe_allow_html=True)
 p_nombre = st.number_input("Nombre de blocs", min_value=1, max_value=50, value=1)
 
 pas_grille_px = 0
-
-col_stats, col_actions = st.columns([1.4, 1])
 
 with col_stats:
     surface_totale = round(
