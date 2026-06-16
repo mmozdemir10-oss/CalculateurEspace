@@ -401,53 +401,52 @@ function makeDraggable(el) {{
     window.addEventListener("touchend", end);
 }}
 
-window.addEventListener("load", () => {{
-    pieces.forEach(p => {{
-
-    const el = document.createElement("div");
-    el.className = "piece";
-    el.id = p.id;
-
-    el.style.width = p.w + "px";
-    el.style.height = p.h + "px";
-    el.style.background = p.color;
-    el.innerText = p.label;
-
-    el.dataset.longueur = p.longueur;
-    el.dataset.largeur = p.largeur;
-
-    el.addEventListener("dblclick", () => {
-
-     const w = el.offsetWidth;
-     const h = el.offsetHeight;
-
-    el.style.width = h + "px";
-    el.style.height = w + "px";
-
-     const ancienneLongueur = el.dataset.longueur;
-     const ancienneLargeur = el.dataset.largeur;
-
-    el.dataset.longueur = ancienneLargeur;
-    el.dataset.largeur = ancienneLongueur;
-
-    el.innerText =
-        ancienneLargeur + " mm × " +
-        ancienneLongueur + " mm";
-});
-});
+window.addEventListener("load", () => {
 
     const zoneStock = document.getElementById("zone-stockage");
-    zoneStock.appendChild(el);
-    makeDraggable(el);
-    }});
-}});
 
-</script>
+    pieces.forEach(p => {
 
-</body>
-</html>
-"""
+        const el = document.createElement("div");
+        el.className = "piece";
+        el.id = p.id;
 
+        el.style.width = p.w + "px";
+        el.style.height = p.h + "px";
+        el.style.background = p.color;
+        el.innerText = p.label;
+
+        // stockage des dimensions
+        el.dataset.longueur = p.w;
+        el.dataset.largeur = p.h;
+
+        // DOUBLE CLICK ROTATION
+        el.addEventListener("dblclick", () => {
+
+            const w = el.offsetWidth;
+            const h = el.offsetHeight;
+
+            el.style.width = h + "px";
+            el.style.height = w + "px";
+
+            // swap datas
+            const oldL = el.dataset.longueur;
+            const oldH = el.dataset.largeur;
+
+            el.dataset.longueur = oldH;
+            el.dataset.largeur = oldL;
+
+            el.innerText =
+                el.dataset.longueur + " mm × " +
+                el.dataset.largeur + " mm";
+        });
+
+        zoneStock.appendChild(el);
+        makeDraggable(el);
+
+    });
+});
+            
 hauteur = max(650, int(grand_hauteur_px) + 250)
 
 components.html(
