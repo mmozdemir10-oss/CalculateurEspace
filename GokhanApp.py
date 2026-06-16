@@ -129,7 +129,7 @@ with col_rect:
 grand_largeur_px = grand_largeur_mm * ECHELLE
 grand_hauteur_px = grand_hauteur_mm * ECHELLE
 
-    st.markdown(f"""
+st.markdown(f"""
     <div class="card">
         <div class="small-label">📐 RECTANGLE PRINCIPAL</div>
         <div class="big-value">{bg_mm} mm × {bh_mm} mm</div>
