@@ -149,13 +149,7 @@ with col_blocs:
 
     p_nombre = st.number_input("Nombre de blocs", min_value=1, max_value=50, value=1)
 
-    pas_grille_cm = st.selectbox(
-        "Grille",
-        options=[0, 1, 5, 10, 20, 50],
-        format_func=lambda x: "Libre" if x == 0 else f"{x} cm"
-    )
-
-    pas_grille_px = pas_grille_cm * ECHELLE
+    pas_grille_px = 0
 
 with col_stats:
     surface_totale = round((grand_largeur_cm * grand_hauteur_cm) / 10000, 2)
@@ -263,10 +257,7 @@ body {{
     overflow:hidden;
     box-shadow:0 10px 25px rgba(0,0,0,0.08);
 
-    background-image:
-    {f'linear-gradient(to right,#e2e8f0 1px,transparent 1px), linear-gradient(to bottom,#e2e8f0 1px,transparent 1px)' if pas_grille_px > 0 else 'none'};
-
-    background-size:{pas_grille_px}px {pas_grille_px}px;
+    background-image: none;
 }}
 
 /* PIECES */
@@ -308,7 +299,6 @@ body {{
 <script>
 
 const pieces = {pieces_json};
-const pasGrille = {pas_grille_px};
 
 const zoneStock = document.getElementById("zone-stockage");
 const zoneDepot = document.getElementById("zone-depot");
@@ -364,10 +354,6 @@ function makeDraggable(el) {{
             let x = rect.left - depotRect.left;
             let y = rect.top - depotRect.top;
 
-            if (pasGrille > 0) {{
-                x = Math.round(x / pasGrille) * pasGrille;
-                y = Math.round(y / pasGrille) * pasGrille;
-            }}
 
             el.style.left = x + "px";
             el.style.top = y + "px";
