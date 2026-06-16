@@ -155,7 +155,7 @@ with col_blocs:
 
 label_metrique = f"{p_long_mm} × {p_larg_mm} mm"
 
-    st.markdown(f"""
+st.markdown(f"""
     <div class="card">
         <div class="small-label">📦 BLOC SÉLECTIONNÉ</div>
         <div class="big-value">{label_metrique}</div>
