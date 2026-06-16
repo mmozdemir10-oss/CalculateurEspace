@@ -413,6 +413,29 @@ window.addEventListener("load", () => {{
     el.style.background = p.color;
     el.innerText = p.label;
 
+    el.dataset.longueur = p.longueur;
+    el.dataset.largeur = p.largeur;
+
+    el.addEventListener("dblclick", () => {
+
+    const w = el.offsetWidth;
+    const h = el.offsetHeight;
+
+    el.style.width = h + "px";
+    el.style.height = w + "px";
+
+    const ancienneLongueur = el.dataset.longueur;
+    const ancienneLargeur = el.dataset.largeur;
+
+    el.dataset.longueur = ancienneLargeur;
+    el.dataset.largeur = ancienneLongueur;
+
+    el.innerText =
+        ancienneLargeur + " mm × " +
+        ancienneLongueur + " mm";
+});
+});
+
     const zoneStock = document.getElementById("zone-stockage");
     zoneStock.appendChild(el);
     makeDraggable(el);
@@ -432,3 +455,13 @@ components.html(
     height=hauteur,
     scrolling=True
 )
+
+st.session_state.pieces.append({
+    "id": f"piece_{len(st.session_state.pieces)}",
+    "w": f_longueur_mm * ECHELLE,
+    "h": f_largeur_mm * ECHELLE,
+    "longueur": f_longueur_mm,
+    "largeur": f_largeur_mm,
+    "color": couleur,
+    "label": label_metrique
+})
