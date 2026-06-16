@@ -223,7 +223,7 @@ if btn_ajouter:
             "label": label_metrique
         })
 
-    st.rerun()
+st.rerun()
 
 
 if btn_effacer:
@@ -416,11 +416,9 @@ window.addEventListener("load", () => {
         el.style.background = p.color;
         el.innerText = p.label;
 
-        // stockage des dimensions
         el.dataset.longueur = p.w;
         el.dataset.largeur = p.h;
 
-        // DOUBLE CLICK ROTATION
         el.addEventListener("dblclick", () => {
 
             const w = el.offsetWidth;
@@ -429,7 +427,6 @@ window.addEventListener("load", () => {
             el.style.width = h + "px";
             el.style.height = w + "px";
 
-            // swap datas
             const oldL = el.dataset.longueur;
             const oldH = el.dataset.largeur;
 
@@ -443,8 +440,8 @@ window.addEventListener("load", () => {
 
         zoneStock.appendChild(el);
         makeDraggable(el);
-
     });
+
 });
             
 hauteur = max(650, int(grand_hauteur_px) + 250)
@@ -455,12 +452,3 @@ components.html(
     scrolling=True
 )
 
-st.session_state.pieces.append({
-    "id": f"piece_{len(st.session_state.pieces)}",
-    "w": f_longueur_mm * ECHELLE,
-    "h": f_largeur_mm * ECHELLE,
-    "longueur": f_longueur_mm,
-    "largeur": f_largeur_mm,
-    "color": couleur,
-    "label": label_metrique
-})
