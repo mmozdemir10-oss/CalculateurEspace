@@ -4,8 +4,8 @@ import json
 from math import floor
 
 st.set_page_config(
-    page_title="Simulateur de Rangement Pro",
-    page_icon="🧩",
+    page_title="Cargo loader",
+    page_icon="⏬️",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -97,10 +97,6 @@ box-shadow:0 10px 25px rgba(37,99,235,.25);
 <h1 style="margin:0;font-size:32px;">
 🧩 Simulateur de rangement sur mesure
 </h1>
-
-<p style="margin-top:10px;font-size:16px;opacity:.95;">
-Créez, positionnez et optimisez vos modules en temps réel sur votre plan.
-</p>
 
 </div>
 """, unsafe_allow_html=True)
