@@ -95,7 +95,7 @@ box-shadow:0 10px 25px rgba(37,99,235,.25);
 ">
 
 <h1 style="margin:0;font-size:32px;">
-🧩 Simulateur de rangement sur mesure
+⏬️ Cargo loader
 </h1>
 
 </div>
