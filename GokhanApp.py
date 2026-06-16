@@ -137,7 +137,7 @@ st.markdown(f"""
     """, unsafe_allow_html=True)
 
 with col_blocs:
-p_long_mm = st.number_input(
+    p_long_mm = st.number_input(
     "Longueur bloc (mm)",
     min_value=1,
     max_value=30000,
@@ -145,7 +145,7 @@ p_long_mm = st.number_input(
     step=50
 )
 
-p_larg_mm = st.number_input(
+    p_larg_mm = st.number_input(
     "Largeur bloc (mm)",
     min_value=1,
     max_value=30000,
