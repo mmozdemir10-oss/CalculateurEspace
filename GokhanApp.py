@@ -444,7 +444,11 @@ window.addEventListener("load", () => {{
 
 }});
 
-"""
+""".format(
+    pieces_json=json.dumps(st.session_state.pieces),
+    grand_largeur_px=grand_largeur_px,
+    grand_hauteur_px=grand_hauteur_px
+)
             
 hauteur = max(650, int(grand_hauteur_px) + 250)
 
