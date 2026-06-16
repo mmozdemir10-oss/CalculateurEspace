@@ -237,7 +237,7 @@ if btn_reset:
 pieces_json = json.dumps(st.session_state.pieces)
 reset_trigger = "true" if btn_reset else "false"
 
-html_code = f"""
+html_code = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -448,6 +448,7 @@ window.addEventListener("load", () => {{
     pieces_json=json.dumps(st.session_state.pieces),
     grand_largeur_px=grand_largeur_px,
     grand_hauteur_px=grand_hauteur_px
+)
 )
             
 hauteur = max(650, int(grand_hauteur_px) + 250)
