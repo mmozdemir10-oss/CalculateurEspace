@@ -297,10 +297,10 @@ body {{
 
 <div class="container">
 
-<h3>📦 Stock</h3>
+<h3>📦 Cargo</h3>
 <div id="zone-stockage"></div>
 
-<h3>📐 Plan de placement</h3>
+<h3>🚛 Truck</h3>
 <div id="zone-depot"></div>
 
 </div>
