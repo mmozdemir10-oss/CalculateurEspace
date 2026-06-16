@@ -170,7 +170,7 @@ st.markdown(f"""
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-p_nombre = st.number_input("Nombre de blocs", min_value=1, max_value=50, value=1)
+p_nombre = st.number_input("Number of blocks", min_value=1, max_value=50, value=1)
 
 pas_grille_px = 0
 
