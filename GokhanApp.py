@@ -162,11 +162,11 @@ st.markdown(f"""
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
-        p_nombre = st.number_input("Nombre de blocs", min_value=1, max_value=50, value=1)
+    p_nombre = st.number_input("Nombre de blocs", min_value=1, max_value=50, value=1)
 
-        pas_grille_px = 0
+    pas_grille_px = 0
 
 with col_stats:
     surface_totale = round(
