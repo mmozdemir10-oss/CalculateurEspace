@@ -104,39 +104,56 @@ box-shadow:0 10px 25px rgba(37,99,235,.25);
 col_rect, col_blocs, col_stats, col_actions = st.columns([2.2, 2.2, 1.4, 1])
     
 with col_rect:
-    bg_m = st.number_input("Longueur du rectangle (m)", min_value=0, max_value=30, value=15, step=1, key="bg_m")
-    bg_cm = st.number_input("Longueur (cm)", min_value=0, max_value=99, value=0, step=5, key="bg_cm")
-    bh_m = st.number_input("Largeur du rectangle (m)", min_value=0, max_value=30, value=5, step=1, key="bh_m")
-    bh_cm = st.number_input("Largeur (cm)", min_value=0, max_value=99, value=0, step=5, key="bh_cm")
 
-    grand_largeur_cm = (bg_m * 100) + bg_cm
-    grand_hauteur_cm = (bh_m * 100) + bh_cm
+    bg_mm = st.number_input(
+        "Longueur du camion (mm)",
+        min_value=0,
+        max_value=30000,
+        value=15000,
+        step=100
+    )
 
-    ECHELLE = 950 / grand_largeur_cm if grand_largeur_cm > 0 else 1
+    bh_mm = st.number_input(
+        "Largeur du camion (mm)",
+        min_value=0,
+        max_value=30000,
+        value=5000,
+        step=100
+    )
 
-    grand_largeur_px = grand_largeur_cm * ECHELLE
-    grand_hauteur_px = grand_hauteur_cm * ECHELLE
+    grand_largeur_mm = bg_mm
+    grand_hauteur_mm = bh_mm
+
+    ECHELLE = 950 / grand_largeur_mm if grand_largeur_mm > 0 else 1
+
+grand_largeur_px = grand_largeur_mm * ECHELLE
+grand_hauteur_px = grand_hauteur_mm * ECHELLE
 
     st.markdown(f"""
     <div class="card">
         <div class="small-label">📐 RECTANGLE PRINCIPAL</div>
-        <div class="big-value">{bg_m}m {bg_cm:02d}cm × {bh_m}m {bh_cm:02d}cm</div>
+        <div class="big-value">{bg_mm} mm × {bh_mm} mm</div>
     </div>
     """, unsafe_allow_html=True)
 
 with col_blocs:
-    p_long_m = st.number_input("Longueur bloc (m)", min_value=0, max_value=30, value=1, step=1)
-    p_long_cm = st.number_input("Longueur bloc (cm)", min_value=0, max_value=99, value=20, step=5)
-    p_larg_m = st.number_input("Largeur bloc (m)", min_value=0, max_value=30, value=0, step=1)
-    p_larg_cm = st.number_input("Largeur bloc (cm)", min_value=0, max_value=99, value=80, step=5)
+    p_long_mm = st.number_input(
+    "Longueur bloc (mm)",
+    min_value=1,
+    max_value=30000,
+    value=1200,
+    step=50
+)
 
-    txt_long = f"{p_long_m}m" if p_long_m > 0 else ""
-    txt_long += f"{p_long_cm}cm" if p_long_cm > 0 or p_long_m == 0 else ""
+p_larg_mm = st.number_input(
+    "Largeur bloc (mm)",
+    min_value=1,
+    max_value=30000,
+    value=800,
+    step=50
+)
 
-    txt_larg = f"{p_larg_m}m" if p_larg_m > 0 else ""
-    txt_larg += f"{p_larg_cm}cm" if p_larg_cm > 0 or p_larg_m == 0 else ""
-
-    label_metrique = f"{txt_long} × {txt_larg}"
+    label_metrique = f"{p_long_mm} × {p_larg_mm} mm"
 
     st.markdown(f"""
     <div class="card">
@@ -152,11 +169,14 @@ with col_blocs:
     pas_grille_px = 0
 
 with col_stats:
-    surface_totale = round((grand_largeur_cm * grand_hauteur_cm) / 10000, 2)
+    surface_totale = round(
+    (grand_largeur_mm * grand_hauteur_mm) / 1_000_000,
+    2
+)
 
     html_stats = f"""
     <div class="card">
-        <div class="small-label">📊 SURFACE</div>
+        <div class="small-label">🚛 SURFACE CAMION</div>
         <div class="big-value">{surface_totale} m²</div>
 
         <hr>
@@ -178,8 +198,8 @@ btn_reset = st.button("🔄 Reset", use_container_width=True)
 btn_effacer = st.button("🗑️ Vider", use_container_width=True)
 
 if btn_ajouter:
-    f_longueur_cm = (p_long_m * 100) + p_long_cm
-    f_largeur_cm = (p_larg_m * 100) + p_larg_cm
+    f_longueur_mm = p_long_mm
+    f_largeur_mm = p_larg_mm
 
     couleurs = [
         "#2563eb", "#14b8a6", "#f97316",
@@ -191,8 +211,8 @@ if btn_ajouter:
     for i in range(p_nombre):
         st.session_state.pieces.append({
             "id": f"piece_{len(st.session_state.pieces)}",
-            "w": f_longueur_cm * ECHELLE,
-            "h": f_largeur_cm * ECHELLE,
+            "w": f_longueur_mm * ECHELLE,
+            "h": f_largeur_mm * ECHELLE,
             "color": couleur,
             "label": label_metrique
         })
