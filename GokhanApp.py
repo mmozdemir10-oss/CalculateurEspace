@@ -416,20 +416,6 @@ pieces.forEach(p => {{
     el.style.background = p.color;
     el.innerText = p.label;
 
-    let rotated = false;
-
-    el.addEventListener("dblclick", () => {{
-
-    rotated = !rotated;
-
-    if (rotated) {{
-        el.style.transform = "rotate(90deg)";
-    }} else {{
-        el.style.transform = "rotate(0deg)";
-    }}
-
-}});
-
     zoneStock.appendChild(el);
     makeDraggable(el);
 
