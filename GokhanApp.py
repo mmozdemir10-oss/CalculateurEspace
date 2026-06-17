@@ -298,6 +298,7 @@ body {{
 
 <script>
 // Récupération sécurisée des données de Streamlit
+pieces_json = json.dumps(st.session_state.pieces)
 const pieces = {pieces_json};
 
 function makeDraggable(el, zoneDepot, zoneStock) {{
