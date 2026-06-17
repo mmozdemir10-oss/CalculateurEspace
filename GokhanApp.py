@@ -403,46 +403,45 @@ function makeDraggable(el) {{
 
 window.addEventListener("load", () => {{
 
-    const zoneStock = document.getElementById("zone-stockage");
+const zoneStock = document.getElementById("zone-stockage");
 
-    pieces.forEach(p => {{
+pieces.forEach(p => {
 
-        const el = document.createElement("div");
-        el.className = "piece";
-        el.id = p.id;
+    const el = document.createElement("div");
+    el.className = "piece";
+    el.id = p.id;
 
-        el.style.width = p.w + "px";
-        el.style.height = p.h + "px";
-        el.style.background = p.color;
-        el.innerText = p.label;
+    el.style.width = p.w + "px";
+    el.style.height = p.h + "px";
+    el.style.background = p.color;
+    el.innerText = p.label;
 
-        el.dataset.longueur = p.w;
-        el.dataset.largeur = p.h;
+    el.dataset.longueur = p.w;
+    el.dataset.largeur = p.h;
 
-        el.addEventListener("dblclick", () => {{
+    el.addEventListener("dblclick", () => {
 
-            const w = el.offsetWidth;
-            const h = el.offsetHeight;
+        const w = el.offsetWidth;
+        const h = el.offsetHeight;
 
-            el.style.width = h + "px";
-            el.style.height = w + "px";
+        el.style.width = h + "px";
+        el.style.height = w + "px";
 
-            const oldL = el.dataset.longueur;
-            const oldH = el.dataset.largeur;
+        const oldL = el.dataset.longueur;
+        const oldH = el.dataset.largeur;
 
-            el.dataset.longueur = oldH;
-            el.dataset.largeur = oldL;
+        el.dataset.longueur = oldH;
+        el.dataset.largeur = oldL;
 
-            el.innerText =
-                el.dataset.longueur + " mm × " +
-                el.dataset.largeur + " mm";
-        }});
+        el.innerText =
+            el.dataset.longueur + " mm × " +
+            el.dataset.largeur + " mm";
+    });
 
-        zoneStock.appendChild(el);
-        makeDraggable(el);
-    }});
+    zoneStock.appendChild(el);
+    makeDraggable(el);
 
-}});
+});
 
 </script>
 
@@ -452,6 +451,7 @@ window.addEventListener("load", () => {{
             
 hauteur = max(650, int(grand_hauteur_px) + 250)
 
+st.write("HTML généré")
 components.html(
     html_code,
     height=hauteur,
