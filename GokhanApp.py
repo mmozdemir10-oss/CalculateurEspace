@@ -242,9 +242,7 @@ html_code = f"""
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-
 body {{
     font-family: system-ui, sans-serif;
     background:#f8fafc;
@@ -252,14 +250,11 @@ body {{
     padding:12px;
     user-select:none;
 }}
-
 .container {{
     display:flex;
     flex-direction:column;
     gap:18px;
 }}
-
-/* STOCK */
 #zone-stockage {{
     min-height:140px;
     border:2px dashed #cbd5e1;
@@ -271,8 +266,6 @@ body {{
     gap:10px;
     box-shadow:0 4px 15px rgba(0,0,0,0.05);
 }}
-
-/* PLAN */
 #zone-depot {{
     width:min(100%, {grand_largeur_px}px);
     height:{grand_hauteur_px}px;
@@ -282,11 +275,7 @@ body {{
     position:relative;
     overflow:hidden;
     box-shadow:0 10px 25px rgba(0,0,0,0.08);
-
-    background-image: none;
 }}
-
-/* PIECES */
 .piece {{
     display:flex;
     align-items:center;
@@ -301,68 +290,49 @@ body {{
     transition:transform .12s;
     touch-action:none;
 }}
-
 .piece:active {{
     cursor:grabbing;
     transform:scale(1.05);
 }}
-
 </style>
 </head>
-
 <body>
 
 <div class="container">
-
-<h3>📦 Cargo</h3>
-<div id="zone-stockage"></div>
-
-<h3>🚛 Truck</h3>
-<div id="zone-depot"></div>
-
+    <h3>📦 Cargo</h3>
+    <div id="zone-stockage"></div>
+    <h3>🚛 Truck</h3>
+    <div id="zone-depot"></div>
 </div>
 
 <script>
-
+// Récupération sécurisée des données de Streamlit
 const pieces = {pieces_json};
 
-const zoneStock = document.getElementById("zone-stockage");
-const zoneDepot = document.getElementById("zone-depot");
-
-if (!zoneStock || !zoneDepot) {{
-    console.error("DOM not ready");
-}}
-
-function makeDraggable(el) {{
-
+function makeDraggable(el, zoneDepot, zoneStock) {{
     let offsetX = 0;
     let offsetY = 0;
     let dragging = false;
 
     function start(e) {{
         dragging = true;
-
         const evt = e.touches ? e.touches[0] : e;
-
         const rect = el.getBoundingClientRect();
-
         offsetX = evt.clientX - rect.left;
         offsetY = evt.clientY - rect.top;
-
         document.body.appendChild(el);
         el.style.position = "absolute";
     }}
 
     function move(e) {{
         if (!dragging) return;
-
         const evt = e.touches ? e.touches[0] : e;
-
         el.style.left = (evt.clientX - offsetX) + "px";
         el.style.top = (evt.clientY - offsetY) + "px";
     }}
 
     function end() {{
+        if (!dragging) return;
         dragging = false;
 
         const depotRect = zoneDepot.getBoundingClientRect();
@@ -376,11 +346,8 @@ function makeDraggable(el) {{
 
         if (inDepot) {{
             zoneDepot.appendChild(el);
-
             let x = rect.left - depotRect.left;
             let y = rect.top - depotRect.top;
-
-
             el.style.left = x + "px";
             el.style.top = y + "px";
         }} else {{
@@ -392,22 +359,21 @@ function makeDraggable(el) {{
     }}
 
     el.addEventListener("mousedown", start);
-    el.addEventListener("touchstart", start);
-
+    el.addEventListener("touchstart", start, {{passive: true}});
     window.addEventListener("mousemove", move);
-    window.addEventListener("touchmove", move);
-
+    window.addEventListener("touchmove", move, {{passive: false}});
     window.addEventListener("mouseup", end);
     window.addEventListener("touchend", end);
 }}
 
-
-//  CODE CORRIGÉ (Exécution immédiate)
-function initPieces() {
+// Initialisation dès que le DOM est dispo (sans attendre le 'load' global)
+function init() {{
     const zoneStock = document.getElementById("zone-stockage");
-    if (!zoneStock) return;
+    const zoneDepot = document.getElementById("zone-depot");
     
-    pieces.forEach(p => {
+    if (!zoneStock || !zoneDepot) return;
+
+    pieces.forEach(p => {{
         const el = document.createElement("div");
         el.className = "piece";
         el.id = p.id;
@@ -415,19 +381,17 @@ function initPieces() {
         el.style.height = p.h + "px";
         el.style.background = p.color;
         el.innerText = p.label;
+
         zoneStock.appendChild(el);
-        makeDraggable(el);
-    });
-}
+        makeDraggable(el, zoneDepot, zoneStock);
+    }});
+}}
 
-// On l'exécute directement ou dès que le DOM est prêt
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initPieces);
-} else {
-    initPieces();
-}
-
-
+if (document.readyState === "loading") {{
+    document.addEventListener("DOMContentLoaded", init);
+}} else {{
+    init();
+}}
 </script>
 
 </body>
