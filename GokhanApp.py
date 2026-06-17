@@ -405,7 +405,7 @@ window.addEventListener("load", () => {{
 
 const zoneStock = document.getElementById("zone-stockage");
 
-pieces.forEach(p => {
+pieces.forEach(p => {{
 
     const el = document.createElement("div");
     el.className = "piece";
@@ -419,7 +419,7 @@ pieces.forEach(p => {
     el.dataset.longueur = p.w;
     el.dataset.largeur = p.h;
 
-    el.addEventListener("dblclick", () => {
+    el.addEventListener("dblclick", () => {{
 
         const w = el.offsetWidth;
         const h = el.offsetHeight;
@@ -442,6 +442,8 @@ pieces.forEach(p => {
     makeDraggable(el);
 
 });
+
+}});
 
 </script>
 
