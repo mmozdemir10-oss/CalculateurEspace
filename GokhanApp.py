@@ -223,7 +223,7 @@ if btn_ajouter:
             "label": label_metrique
         })
 
-st.rerun()
+        st.rerun()
 
 
 if btn_effacer:
