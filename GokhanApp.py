@@ -223,7 +223,7 @@ if btn_ajouter:
             "label": label_metrique
         })
 
-        st.rerun()
+    st.rerun()
 
 
 if btn_effacer:
@@ -237,7 +237,7 @@ if btn_reset:
 pieces_json = json.dumps(st.session_state.pieces)
 reset_trigger = "true" if btn_reset else "false"
 
-html_code = """
+html_code = f"""
 <!DOCTYPE html>
 <html>
 <head>
@@ -444,7 +444,11 @@ window.addEventListener("load", () => {{
 
 }});
 
-""" % json.dumps(st.session_state.pieces)
+</script>
+
+</body>
+</html>
+"""
             
 hauteur = max(650, int(grand_hauteur_px) + 250)
 
