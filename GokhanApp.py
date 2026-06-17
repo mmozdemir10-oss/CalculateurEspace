@@ -367,7 +367,7 @@ function makeDraggable(el, zoneDepot, zoneStock) {{
     window.addEventListener("touchend", end);
 }}
 
-function init() {
+function init() {{
     const zoneStock = document.getElementById("zone-stockage");
     const zoneDepot = document.getElementById("zone-depot");
     
