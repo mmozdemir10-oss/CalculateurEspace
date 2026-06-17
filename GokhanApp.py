@@ -58,6 +58,33 @@ st.markdown("""
     box-shadow:0 4px 15px rgba(0,0,0,0.05);
 }
 
+.piece {
+    position: relative; /* Permet de placer le bouton par rapport au bloc */
+}
+
+.rotate-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: rgba(255, 255, 255, 0.7);
+    color: #0f172a;
+    border: none;
+    border-radius: 4px;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 10;
+}
+.rotate-btn:hover {
+    background: white;
+}
+
+
 /* titres internes */
 .small-label{
     font-size:13px;
@@ -287,6 +314,8 @@ function makeDraggable(el, zoneDepot, zoneStock) {{
     let dragging = false;
 
     function start(e) {{
+        if (e.target.className === "rotate-btn") return; 
+        
         dragging = true;
         const evt = e.touches ? e.touches[0] : e;
         const rect = el.getBoundingClientRect();
@@ -338,7 +367,7 @@ function makeDraggable(el, zoneDepot, zoneStock) {{
     window.addEventListener("touchend", end);
 }}
 
-function init() {{
+function init() {
     const zoneStock = document.getElementById("zone-stockage");
     const zoneDepot = document.getElementById("zone-depot");
     
@@ -353,10 +382,43 @@ function init() {{
         el.style.background = p.color;
         el.innerText = p.label;
 
+        // ➕ CRÉATION DU BOUTON DE ROTATION
+        const rotBtn = document.createElement("button");
+        rotBtn.className = "rotate-btn";
+        rotBtn.innerText = "↻";
+        rotBtn.title = "Faire pivoter de 90°";
+
+        // LOGIQUE DE ROTATION (Inversion Largeur / Hauteur)
+        rotBtn.addEventListener("click", (e) => {{
+            e.stopPropagation(); // Évite de déclencher le drag & drop par erreur
+            
+            const currentWidth = el.style.width;
+            const currentHeight = el.style.height;
+            
+            // On inverse les dimensions
+            el.style.width = currentHeight;
+            el.style.height = currentWidth;
+            
+            // Optionnel : Si le bloc est déjà dans le camion, on ajuste sa position 
+            // pour éviter qu'il sorte de l'écran lors du pivot
+            const rect = el.getBoundingClientRect();
+            const depotRect = zoneDepot.getBoundingClientRect();
+            if (el.parentElement === zoneDepot) {{
+                let x = rect.left - depotRect.left;
+                let y = rect.top - depotRect.top;
+                el.style.left = x + "px";
+                el.style.top = y + "px";
+            }}
+        }});
+
+        // On imbrique le bouton dans le bloc
+        el.appendChild(rotBtn);
+
         zoneStock.appendChild(el);
         makeDraggable(el, zoneDepot, zoneStock);
     }});
 }}
+
 
 if (document.readyState === "loading") {{
     document.addEventListener("DOMContentLoaded", init);
