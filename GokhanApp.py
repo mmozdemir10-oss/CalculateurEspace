@@ -231,7 +231,7 @@ if btn_effacer:
 
 if btn_reset:
 
-pieces_json = json.dumps(st.session_state.pieces)
+  pieces_json = json.dumps(st.session_state.pieces)
 reset_trigger = "true" if btn_reset else "false"
 
 html_code = f"""
