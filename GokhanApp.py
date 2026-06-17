@@ -401,27 +401,32 @@ function makeDraggable(el) {{
     window.addEventListener("touchend", end);
 }}
 
-window.addEventListener("load", () => {{
 
-const zoneStock = document.getElementById("zone-stockage");
+//  CODE CORRIGÉ (Exécution immédiate)
+function initPieces() {
+    const zoneStock = document.getElementById("zone-stockage");
+    if (!zoneStock) return;
+    
+    pieces.forEach(p => {
+        const el = document.createElement("div");
+        el.className = "piece";
+        el.id = p.id;
+        el.style.width = p.w + "px";
+        el.style.height = p.h + "px";
+        el.style.background = p.color;
+        el.innerText = p.label;
+        zoneStock.appendChild(el);
+        makeDraggable(el);
+    });
+}
 
-pieces.forEach(p => {{
+// On l'exécute directement ou dès que le DOM est prêt
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPieces);
+} else {
+    initPieces();
+}
 
-    const el = document.createElement("div");
-    el.className = "piece";
-    el.id = p.id;
-
-    el.style.width = p.w + "px";
-    el.style.height = p.h + "px";
-    el.style.background = p.color;
-    el.innerText = p.label;
-
-    zoneStock.appendChild(el);
-    makeDraggable(el);
-
-}});
-
-}});
 
 </script>
 
