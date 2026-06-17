@@ -223,16 +223,13 @@ if btn_ajouter:
             "label": label_metrique
         })
 
-    st.rerun()
 
 
 if btn_effacer:
     st.session_state.pieces = []
-    st.rerun()
 
 
 if btn_reset:
-    st.rerun()
 
 pieces_json = json.dumps(st.session_state.pieces)
 reset_trigger = "true" if btn_reset else "false"
