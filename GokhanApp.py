@@ -436,12 +436,12 @@ pieces.forEach(p => {{
         el.innerText =
             el.dataset.longueur + " mm × " +
             el.dataset.largeur + " mm";
-    });
+    }});
 
     zoneStock.appendChild(el);
     makeDraggable(el);
 
-});
+}});
 
 }});
 
