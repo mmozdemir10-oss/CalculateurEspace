@@ -16,7 +16,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-:root{{
+:root{
     --bg:#f8fafc;
     --card:#ffffff;
     --border:#e2e8f0;
@@ -24,53 +24,53 @@ st.markdown("""
     --primary-light:#dbeafe;
     --text:#0f172a;
     --muted:#64748b;
-}}
+}
 
 /* fond général */
 .stApp{{
     background:var(--bg);
-}}
+}
 
 /* conteneur principal */
-.block-container{{
+.block-container{
     padding-top:1rem;
     max-width:1600px;
-}}
+}
 
 /* boutons */
-.stButton button{{
+.stButton button{
     border-radius:12px;
     height:48px;
     font-weight:600;
     border:none;
     transition:0.2s;
-}}
+}
 
-.stButton button:hover{{
+.stButton button:hover{
     transform:translateY(-2px);
-}}
+}
 
 /* cartes */
-.card{{
+.card{
     background:white;
     border-radius:18px;
     padding:18px;
     border:1px solid var(--border);
     box-shadow:0 4px 15px rgba(0,0,0,0.05);
-}}
+}
 
 /* titres internes */
-.small-label{{
+.small-label{
     font-size:13px;
     color:var(--muted);
     font-weight:600;
-}}
+}
 
-.big-value{{
+.big-value{
     font-size:22px;
     font-weight:700;
     color:var(--text);
-}}
+}
 
 </style>
 """, unsafe_allow_html=True)
