@@ -445,7 +445,6 @@ window.addEventListener("load", () => {{
 }});
 
 """ % json.dumps(st.session_state.pieces)
-)
             
 hauteur = max(650, int(grand_hauteur_px) + 250)
 
