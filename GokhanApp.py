@@ -416,27 +416,19 @@ pieces.forEach(p => {{
     el.style.background = p.color;
     el.innerText = p.label;
 
-    el.dataset.longueur = p.w;
-    el.dataset.largeur = p.h;
+    let rotated = false;
 
     el.addEventListener("dblclick", () => {{
 
-        const w = el.offsetWidth;
-        const h = el.offsetHeight;
+    rotated = !rotated;
 
-        el.style.width = h + "px";
-        el.style.height = w + "px";
+    if (rotated) {{
+        el.style.transform = "rotate(90deg)";
+    }} else {{
+        el.style.transform = "rotate(0deg)";
+    }}
 
-        const oldL = el.dataset.longueur;
-        const oldH = el.dataset.largeur;
-
-        el.dataset.longueur = oldH;
-        el.dataset.largeur = oldL;
-
-        el.innerText =
-            el.dataset.longueur + " mm × " +
-            el.dataset.largeur + " mm";
-    }});
+}});
 
     zoneStock.appendChild(el);
     makeDraggable(el);
@@ -453,7 +445,6 @@ pieces.forEach(p => {{
             
 hauteur = max(650, int(grand_hauteur_px) + 250)
 
-st.write("HTML généré")
 components.html(
     html_code,
     height=hauteur,
